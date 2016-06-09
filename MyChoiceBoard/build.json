@@ -1,0 +1,11 @@
+{
+     "android": {
+         "release": {
+             "keystore": "C:\\Softwares\\certificates\\MyChoiceMaker-key.keystore",
+             "storePassword": "pointer01",
+             "alias": "PoojaS",
+             "password" : "pointer01",
+             "keystoreType": ""
+         }
+     }
+ }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src *; media-src *; script-src *; img-src * data:">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/index.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="scripts/html2canvas.js"></script>
+        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+        <script type="text/javascript" src="scripts/index.js"></script>
+        <script src="scripts/jquery-1.12.1.js"></script>
+        <title>MyChoiceBoard</title>
+    </head>
+    <body id="indexpg">
+        <header id="header_id">
+            <button id="new_board_btn"></button>
+            <button id="delete" class="delete"></button>
+            <button id="info" class="info"></button>
+        </header>
+        <div id="deletealert"><p>Drag and drop the board to delete</p></div>
+        <div id="processing"><p>Deleting</p></div>
+        <div id="my_boards_div">
+            <div><p>My Choice Boards</p></div>
+            <table id="my_boards">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

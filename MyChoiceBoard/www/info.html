@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src *; media-src *; script-src *; img-src * data:">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/index.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="scripts/html2canvas.js"></script>
+        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+        <script type="text/javascript" src="scripts/index.js"></script>
+        <script src="scripts/jquery-1.12.1.js"></script>
+        <title>MyChoiceBoard</title>
+    </head>
+    <body id="infopg">
+        <header id="header_id">
+            <p>Help</p>
+            <button id="back">Back</button>
+        </header>
+        <div id="infodiv">
+            <p>MyChoiceMaker presents a simple interface for creating and viewing Choice Boards for children with communication Challenges. Choice Boards can be created with a picture/word combination.</p>
+            <h4>Create New Board:</h4>
+            A new choice board can be added by clicking on the '+' button on main page. Boards can be created for horizontal or vertical scanning with up to three choices, as per the visual preference of the child; or in a grid arrangement of upto 6 choices.
+            Choice items can be added by clicking the choice frame and saving a picture/text to it. Boards can be saved for later viewing. Saved boards are displayed on the main page.
+            <h4>Delete A Board:</h4>
+            An existing board can be deleted by dragging and dropping the board to the Delete button on the main page.
+            <h4>View Board:</h4>
+            A previously saved board can be viewed by clicking on its image on the main page. In the view mode, the selected choice item is momentarily highlighted for visual support.
+        </div>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src *; media-src *; script-src *; img-src * data:">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/index.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+        <script type="text/javascript" src="scripts/index.js"></script>
+        <script src="scripts/jquery-1.12.1.js"></script>
+    </head>
+    <body id="choiceitem_id">
+        <header id="header_id">
+           <button id="add_image_id"></button>
+            <button id="doodle_id"></button>
+            <button id="add_text_id"></button>
+            <button id="undo"></button>
+            <details id="font_details">
+                <summary>Font</summary>
+                <select id="font" name="Font" size="1">
+                    <option id="12px" value="12px">12</option>
+                    <option id="14px" value="14px">14</option>
+                    <option id="16px" value="16px">16</option>
+                    <option id="18px" value="18px">18</option>
+                    <option id="20px" value="20px">20</option>
+                    <option id="22px" value="22px">22</option>
+                    <option id="24px" value="24px">24</option>
+                    <option id="26px" value="26px">26</option>
+                    <option id="28px" value="28px">28</option>
+                    <option id="36px" value="36px">36</option>
+                    <option id="48px" value="48px">48</option>
+                    <option id="72px" value="72px">72</option>
+                    <option id="80px" value="80px">80</option>
+                    <option id="96px" value="96px">96</option>
+                    <option id="110px" value="110px">110</option>
+                </select>
+
+            </details>
+            
+            
+            <button id="save">Save</button>
+            <button id="back">Cancel</button>
+        </header>
+        <div id="textarea_div" draggable="true">
+            <textarea id="canvas_text"></textarea>
+        </div>
+        <div id="canvas_div">
+            <canvas id="canvas"></canvas>
+        </div>
+    </body>
+</html>

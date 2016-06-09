@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src *; media-src *; script-src *; img-src *">
+        
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/index.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+        <script type="text/javascript" src="scripts/index.js"></script>
+        <script src="scripts/jquery-1.12.1.js"></script>
+        <title></title>
+    </head>
+    <body id="newboardsetting">
+        <header id="header_id">
+            <p>Choose Display</p>
+            <button id="back">Cancel</button>
+            
+        </header>
+
+        <div id="board_type_div">
+            <table id="settings_table">
+                <tbody>
+                    <tr><td id="horizontal_id">Horizontal</td></tr>
+                    <tr id="settings_row1">
+                        <td id="oneby2">
+                            1x2
+       
+                        </td>
+                        <td id="oneby3">
+                            1x3
+                        </td>
+                    </tr>
+                    <tr><td id="vertical_id">Vertical</td></tr>
+                    <tr id="settings_row2">
+                        <td id="twoby1">
+                            2x1
+                        </td>
+                        <td id="threeby1">
+                            3x1
+                        </td>
+                    </tr>
+                    <tr><td id="grid_id">Grid </td></tr>
+                    <tr id="settings_row3">
+                        <td id="twoby2">
+                            2x2
+                        </td>
+                        <td id="threeby2">
+                            3x2
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </body>
+</html>
