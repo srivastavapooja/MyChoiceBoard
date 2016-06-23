@@ -14,16 +14,25 @@
     var cstep = -1;
     var touchmove = false;
     var board = [];
+    var audio = null;
+    var recorderActive = false;
     var choices = {
         img_r1c1: null,
+        rec_r1c1: null,
         img_r1c2: null,
+        rec_r1c2: null,
         img_r1c3: null,
+        rec_r1c3: null,
         img_r2c1: null,
+        rec_r2c1: null,
         img_r2c2: null,
+        rec_r2c2: null,
         img_r3c1: null,
-        img_r3c2: null
+        rec_r3c1: null,
+        img_r3c2: null,
+        rec_r3c2: null
     };
-
+    var audiofiles = ["res/audio/yes.wav", "res/audio/no.wav", "res/audio/apple.wav", "res/audio/cookie.wav", "res/audio/cake.wav", "res/audio/ball.wav", "res/audio/book.wav", "res/audio/playground.wav", "res/audio/toy.wav"];
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
 
     function onDeviceReady() {
@@ -45,6 +54,8 @@
             var time = setInterval(function () {
                 if (filereadcomplete == true) {
                     displayBoardList();
+                    for (var i = 0; i < audiofiles.length;i++)
+                        loadAudio(audiofiles[i]);
                     clearInterval(time);
                 }
             }, 500);
@@ -145,12 +156,55 @@
                 $("#add_text_id").css('background-image', 'url("images/add_text_overlay.png")');
                 $("#doodle_id").css('background-image', 'url("images/doodle.png")');
                 $("#add_image_id").css('background-image', 'url("images/add_img.png")');
-                $("#font_details").css('display', 'inline');
+                //$("#font_details").css('display', 'inline');
+                var selection = $("#font").find(':selected').val();
+                var font = "bold "+ selection+ " Georgia, serif"
+                $("#canvas_text").css('font', font);
                 $("#canvas_text").css('display', 'inline');
             });
 
+            /*this code is added to handle the hardware back button of android. the recorder in android device is dismissed with hardware back button. 
+            the default action of back button is suppressed so that the canvas page does not go back when recorder is dismissed with back button.*/
+            document.addEventListener('backbutton', function (e) {
+                if (recorderActive)
+                    e.preventDefault();
+                else
+                    window.history.back();
+                recorderActive = false;
+            });
+            $("#record").click(function () {
+                recorderActive = true;
+                    navigator.device.capture.captureAudio(captureSuccess, captureError, { limit: 1 });
+                    
+
+            });
+
+            $("#delete_rec").click(function () {
+                
+                var filename = audio.substr(10, audio.length-1)
+                var basepath = cordova.file.dataDirectory;
+                audio = null;
+                var ua = navigator.userAgent.toLowerCase();
+                var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+                if (isAndroid)
+                    basepath = cordova.file.dataDirectory;
+
+                window.resolveLocalFileSystemURL(basepath + "res/audio", function (dir) {
+                    dir.getFile(filename, { create: false }, function (file) {
+                        file.remove(function () {
+                            document.getElementById("deleteconfirm").style.display = "inline";
+                            document.getElementById("deleteconfirm").style.zIndex = 3;
+                            document.getElementById("ok").addEventListener("click", function () {
+                                document.getElementById("deleteconfirm").style.display = "none";
+                            });
+                        });
+                    }, function () { });
+                });
+
+            });
+
             /*Handle the Save/Done button*/
-            $("#save").click(function () {
+            $("#canvas_save").click(function () {
                 readfile("res/board.txt");
                 var timer = setInterval(function () {
                     if (filereadcomplete == true) {
@@ -160,6 +214,10 @@
                 }, 500);
                 
             });
+
+            if ($("#canvas_back").length) {
+                $("#canvas_back").click(function () { pageTransition('right', window.history.back()); });
+            }
 
             /*Handle the Font drop down. Change the Canvas font on selection*/
             $("#font").change(function () {
@@ -197,7 +255,7 @@
 
     /*Function to display the selected board*/
     function displayBoard(board) {
-        var url;
+        var url,record = null;
         
         var configobj = board.config;
         if (configobj.alignment == 'vertical') {
@@ -206,8 +264,12 @@
                 $('#board_table').append('<tr><td><img id="img_r' + i + 'c1" src=""/></td></tr>');
                 var celldata = board.boarddata;
                 for (var j = 0; j < celldata.length; j++) {
-                    if (celldata[j].id == "img_r" + i + "c1")
+                    if (celldata[j].id == "img_r" + i + "c1") {
                         url = celldata[j].img;
+                        record = celldata[j].rec;
+                        console.log(record);
+                    }
+
                 }
                 if (url != null) {
                     $("#img_r" + i + "c1").attr('src', url);
@@ -222,9 +284,27 @@
                     $("#img_r" + i + "c1").css('height', td_height);
                 }
                 $('#img_r' + i + 'c1').on('touchend', function () {
-                    $("#" + this.id).css('border', '4px solid rgb(255, 0, 0)');
+                    $("#" + this.id).css('border', '2px solid rgb(255, 0, 0)');
                     var id = this.id;
-                    setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 1000);
+                    for (var j = 0; j < celldata.length; j++) {
+                        if (celldata[j].id == this.id) {
+                            record = celldata[j].rec;
+                        }
+                    }
+                    if (record != null) {
+                        var basepath = cordova.file.dataDirectory;
+                        window.resolveLocalFileSystemURL(basepath + record, function (dir) {
+                            var media = new Media(dir.toInternalURL(), function () {
+                                media.release();
+                                $("#" + id).css('border', '2px solid rgb(119, 119, 119)');
+                            }, function (e) {
+                                JSON.stringify(e);
+                            });
+                            media.play();
+                        });
+                    } else {
+                        setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 2000);
+                    }
                 });
             }
             
@@ -240,13 +320,31 @@
                 for (var j = 0; j < celldata.length; j++) {
                     if (celldata[j].id == "img_r1c" + i)
                         url = celldata[j].img;
+                        record = celldata[j].rec;
                 }
                 if (url != null) 
                     $("#img_r1c" + i).attr('src', url);
                 $('#img_r1c' + i).on('touchend', function () {
-                    $("#" + this.id).css('border', '4px solid rgb(255, 0, 0)');
+                    $("#" + this.id).css('border', '2px solid rgb(255, 0, 0)');
                     var id = this.id;
-                    setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 1000);
+                    for (var j = 0; j < celldata.length; j++) {
+                        if (celldata[j].id == this.id)
+                            record = celldata[j].rec;
+                    }
+                    if (record != null) {
+                        var basepath = cordova.file.dataDirectory;
+                        window.resolveLocalFileSystemURL(basepath + record, function (dir) {
+                            var media = new Media(dir.toInternalURL(), function () {
+                                media.release();
+                                $("#" + id).css('border', '2px solid rgb(119, 119, 119)');
+                            }, function (e) {
+                                JSON.stringify(e);
+                            });
+                            media.play();
+                        });
+                    } else {
+                        setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 2000);
+                    }
                 });
             }
             if (configobj.choices== 2)
@@ -268,6 +366,7 @@
                 for (var j = 0; j < celldata.length; j++) {
                     if (celldata[j].id == "img_r" + i + "c1")
                         url = celldata[j].img;
+                        record = celldata[j].rec;
                 }
                 if (url != null) {
                     $("#img_r" + i + "c1").attr('src', url);
@@ -278,6 +377,7 @@
                 for (var j = 0; j < celldata.length; j++) {
                     if (celldata[j].id == "img_r" + i + "c2")
                         url = celldata[j].img;
+                        record = celldata[j].rec;
                 }
                 if (url != null) {
                     $("#img_r" + i + "c2").attr('src', url);
@@ -297,14 +397,48 @@
                     $("#img_r" + i + "c2").css('height', td_height);
                 }
                  $('#img_r' + i + 'c1').on('touchend', function () {
-                     $("#" + this.id).css('border', '4px solid rgb(255, 0, 0)');
+                     $("#" + this.id).css('border', '2px solid rgb(255, 0, 0)');
                      var id = this.id;
-                     setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 1000);
+                     for (var j = 0; j < celldata.length; j++) {
+                         if (celldata[j].id == this.id)
+                             record = celldata[j].rec;
+                     }
+                     if (record != null) {
+                         var basepath = cordova.file.dataDirectory;
+                         window.resolveLocalFileSystemURL(basepath + record, function (dir) {
+                             var media = new Media(dir.toInternalURL(), function () {
+                                 media.release();
+                                 $("#" + id).css('border', '2px solid rgb(119, 119, 119)');
+                             }, function (e) {
+                                 JSON.stringify(e);
+                             });
+                             media.play();
+                         });
+                     } else {
+                         setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 2000);
+                     }
                  });
                  $('#img_r' + i + 'c2').on('touchend', function () {
-                     $("#" + this.id).css('border', '4px solid rgb(255, 0, 0)');
+                     $("#" + this.id).css('border', '2px solid rgb(255, 0, 0)');
                      var id = this.id;
-                     setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 1000);
+                     for (var j = 0; j < celldata.length; j++) {
+                         if (celldata[j].id == this.id)
+                             record = celldata[j].rec;
+                     }
+                     if (record != null) {
+                         var basepath = cordova.file.dataDirectory;
+                         window.resolveLocalFileSystemURL(basepath + record, function (dir) {
+                             var media = new Media(dir.toInternalURL(), function () {
+                                 media.release();
+                                 $("#" + id).css('border', '2px solid rgb(119, 119, 119)');
+                             }, function (e) {
+                                 JSON.stringify(e);
+                             });
+                             media.play();
+                         });
+                     } else {
+                         setTimeout(function () { $("#" + id).css('border', '2px solid rgb(119, 119, 119)'); }, 2000);
+                     }
                  });
                 i++;
             });
@@ -408,24 +542,31 @@
         switch (cellid) {
             case "img_r1c1":
                 board.img_r1c1 = dataUrl;
+                board.rec_r1c1 = audio;
                 break;
             case "img_r1c2":
                 board.img_r1c2 = dataUrl;
+                board.rec_r1c2 = audio;
                 break;
             case "img_r1c3":
                 board.img_r1c3 = dataUrl;
+                board.rec_r1c3 = audio;
                 break;
             case "img_r2c1":
                 board.img_r2c1 = dataUrl;
+                board.rec_r2c1 = audio;
                 break;
             case "img_r2c2":
                 board.img_r2c2 = dataUrl;
+                board.rec_r2c2 = audio;
                 break;
             case "img_r3c1":
                 board.img_r3c1 = dataUrl;
+                board.rec_r3c1 = audio;
                 break;
             case "img_r3c2":
                 board.img_r3c2 = dataUrl;
+                board.rec_r3c2 = audio;
                 break;
         }
         var text = JSON.stringify(board);
@@ -442,6 +583,25 @@
             }, function (e) { JSON.stringify(e); });
         });
         
+    }
+
+    function getAudioURL(cellid) {
+        switch (cellid) {
+            case "img_r1c1":
+                return board.rec_r1c1;
+            case "img_r1c2":
+                return board.rec_r1c2;
+            case "img_r1c3":
+                return board.rec_r1c3;
+            case "img_r2c1":
+                return board.rec_r2c1;
+            case "img_r2c2":
+                return board.rec_r2c2;
+            case "img_r3c1":
+                return board.rec_r3c1;
+            case "img_r3c2":
+                return board.rec_r3c2;
+        }
     }
 
     /*Function to save the newly created board in boardlist file*/
@@ -480,10 +640,12 @@
                     var data = [];
                     $("img").each(function () {
                             var cellid = this.id;
-                        var image = $("#" + cellid).attr('src');
+                            var image = $("#" + cellid).attr('src');
+                            var recording = getAudioURL(cellid);
                         var celldata = {
                             id: cellid,
-                            img: image
+                            img: image,
+                            rec: recording
                         };
                         data.push(celldata);
                     });
@@ -529,8 +691,9 @@
     function initCanvas() {
         canvas = document.getElementById("canvas");
         var top = parseInt($("#canvas_div").css("top"));
+        var bottom = 60;
         canvas.width = window.innerWidth- 40;
-        canvas.height = window.innerHeight - top - 40; /*canvas height - canvas div position - margins and borders*/
+        canvas.height = window.innerHeight - top-bottom - 40; /*canvas height - canvas div position - margins and borders*/
 
         cstep = -1; /*variable to keep track of array of canvas states to implement undo operation*/
     }
@@ -928,7 +1091,66 @@
         ctx.drawImage(tempCanvas, 0, 0, tempCanvas.width, tempCanvas.height, 0, 0, canvas.width, canvas.height);
     }
 
-    
+    /*function to load audio files of pre-saved boards*/
+    function loadAudio(filename) {
+        var i, path, len;
+        var basepath = cordova.file.dataDirectory;
+
+            window.resolveLocalFileSystemURL(basepath + filename, function (dir) {
+                console.log("file exists");
+            }, function () {
+                var fileTransfer = new FileTransfer();
+                //   var url = cordova.file.applicationDirectory + ("www/" + filename);
+                var url = cordova.file.applicationDirectory + ("www/" + filename);
+                fileTransfer.download(url, basepath + filename,
+                    function (entry) {
+                        //    urlToUse = entry.toNativeURL();
+                        console.log(entry.toNativeURL());
+                    },
+                    function (err) {
+                        console.log(JSON.stringify(err));
+                    })
+            }, function (e) { console.log(JSON.stringify(e)); });
+        
+    }
+
+    var captureSuccess = function (mediaFiles) {
+        var random = Math.floor(Math.random()*10000);
+        var filename = "res/audio/audio" + random + ".wav";
+        audio = filename;
+        var i, path, len;
+        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+            path = mediaFiles[i].localURL;
+            var basepath = cordova.file.dataDirectory;
+
+                 var ua = navigator.userAgent.toLowerCase();
+                 var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+                 if (isAndroid)
+                     basepath = cordova.file.dataDirectory;
+
+            window.resolveLocalFileSystemURL(basepath + filename, function (dir) {
+                console.log("file exists");
+            }, function () {
+                var fileTransfer = new FileTransfer();
+                //   var url = cordova.file.applicationDirectory + ("www/" + filename);
+                var url = encodeURI(path);
+                fileTransfer.download(url, basepath + filename,
+                    function (entry) {
+                        //    urlToUse = entry.toNativeURL();
+                        console.log(entry.toNativeURL());
+                    },
+                    function (err) {
+                        console.log(JSON.stringify(err));
+                    })
+            }, function (e) { console.log(JSON.stringify(e)); });
+        }
+    };
+
+    /*function call on unsuccessfull recording of audio file*/
+    var captureError = function (error) {
+        navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+        console.log('Error code: ' + error.code);
+    };
     function onPause() {
         // TODO: This application has been suspended. Save application state here.
     };

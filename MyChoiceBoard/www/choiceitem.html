@@ -16,7 +16,7 @@
         <script src="scripts/jquery-1.12.1.js"></script>
     </head>
     <body id="choiceitem_id">
-        <header id="header_id">
+        <header id="canvas_header">
            <button id="add_image_id"></button>
             <button id="doodle_id"></button>
             <button id="add_text_id"></button>
@@ -34,18 +34,17 @@
                     <option id="26px" value="26px">26</option>
                     <option id="28px" value="28px">28</option>
                     <option id="36px" value="36px">36</option>
-                    <option id="48px" value="48px">48</option>
+                    <option id="48px" value="48px" selected="selected">48</option>
                     <option id="72px" value="72px">72</option>
                     <option id="80px" value="80px">80</option>
                     <option id="96px" value="96px">96</option>
                     <option id="110px" value="110px">110</option>
                 </select>
-
+                
             </details>
-            
-            
-            <button id="save">Save</button>
-            <button id="back">Cancel</button>
+            <button id="record"></button>
+            <button id="delete_rec"></button>
+
         </header>
         <div id="textarea_div" draggable="true">
             <textarea id="canvas_text"></textarea>
@@ -53,5 +52,15 @@
         <div id="canvas_div">
             <canvas id="canvas"></canvas>
         </div>
+        <div id="deleteconfirm">
+            <p><br />Recording Deleted<br /></p>
+            <button id="ok">OK</button>
+        </div>
+        <footer>
+
+            <button id="canvas_save">Save</button>
+            <button id="canvas_back">Cancel</button>
+
+        </footer>
     </body>
 </html>

@@ -21,6 +21,18 @@ header{
     height: 60px;
 
 }
+footer{
+    width:100%;
+    position: fixed;
+    bottom:0px;
+    left:0px;
+    text-align:center;
+    z-index:1;
+    background: rgb(175, 220, 228); /* Old browsers */
+    height: 60px;
+
+}
+
 #infodiv{
     font: 1em Georgia, serif;
     text-align:justify;
@@ -42,12 +54,12 @@ details:focus, details:active, details.active, details:focus:active {
         border-spacing:10px;
         border-collapse:separate;
 }
-#back, #back_btn, #save, #ok, #alert{
+#back, #back_btn, #save, #ok, #alert, #canvas_back, #canvas_save, #deleteconfirm{
         border: none;
         border-radius: 10px;
         background-color: rgb(0, 0, 0);
         text-align: center;
-        font: bold 1em Georgia, serif;
+        font: bold 0.8em Georgia, serif;
         color: rgb(255,255,255);
     }
 #back, #back_btn, #save{
@@ -57,6 +69,13 @@ details:focus, details:active, details.active, details:focus:active {
         right: 10px;
         top:10px;
     }
+#canvas_save, #canvas_back{
+        width: 70px;
+        height:30px;
+        position: absolute;
+        right: 10px;
+        bottom:10px;
+}
 #new_board_btn, .delete, .deleteoverlay{
         border: 2px solid black;
         border-radius:10px;
@@ -164,11 +183,10 @@ span{
        padding:0px;
    }
    #font_details{
-       width: 15%;
+       width: 60px;
        border: none;
-       display: none;
    }
-    #add_image_id, #add_text_id, #doodle_id, #undo{
+    #add_image_id, #add_text_id, #doodle_id, #undo, #record, #delete_rec{
        border: 2px solid black;
        border-radius:10px;
        width: 30px;
@@ -201,7 +219,16 @@ span{
        background-size:cover;
        left:130px;
    }
- 
+    #record{
+        background: url("../images/record.png") no-repeat;
+        background-size: cover;
+        left: 240px;
+    }
+    #delete_rec{
+        background: url("../images/delete_record.png") no-repeat;
+        background-size: cover;
+        left: 280px;
+    }
     #displayboard_div #back{
        border:none;
        position: absolute;
@@ -210,7 +237,7 @@ span{
        background:transparent url('../images/back.png') no-repeat;
        background-size:contain;
    }
-    #alert{
+    #alert, #deleteconfirm{
        border: 1px solid black;
        border-radius:10px;
        background-color:rgb(192,192,192);
@@ -239,7 +266,7 @@ span{
   and (max-height: 690px) 
   and (max-width: 387px) 
   and (orientation: portrait){
-
+    
     #my_boards_div, #board_type_div, #canvas_div, #infodiv{
         position:absolute;
         top: 80px;
@@ -256,16 +283,11 @@ span{
         padding: 0px;
     }
 
-    #save{
+    #save, #canvas_save{
         right: 90px;
     }
-    #choiceitem_id #save{
-        right: 70px;
-    }
-    #choiceitem_id #save, #choiceitem_id #back{
-        font: bold 0.7em Georgia, serif;
-        width: 50px;
-    }
+    
+    
     .my_boards_td{
         height:90px;
         width:30%;
@@ -289,7 +311,7 @@ span{
        width: 20px;
        height: 20px;
    }
-   #alert{
+   #alert, #deleteconfirm{
        position: absolute;
        width: 80%;
        top:200px;
@@ -333,8 +355,9 @@ span{
        height: 200px;
    }
 }
-@media screen and (min-width: 768px) and (min-height: 1024px)
+@media screen and (min-width: 390px) and (max-width: 800px) and (max-height: 1280px)
 and (orientation: portrait){
+    
     #my_boards_div, #board_type_div, #new_board_div, #canvas_div, #infodiv{
         position:absolute;
         top: 100px;
@@ -343,7 +366,7 @@ and (orientation: portrait){
         padding: 0px;
     }
    
-    #back, #back_btn, #save{
+    #back, #back_btn, #save , #canvas_back, #canvas_save{
         width: 90px;
     }
     .td_div{
@@ -384,7 +407,7 @@ and (orientation: portrait){
        width: 95%;
        height: 300px;
    }
-  #save{
+  #save, #canvas_save{
         right: 120px;
     }
   #canvas_text{
@@ -397,7 +420,7 @@ and (orientation: portrait){
        width: 30px;
        height: 30px;
    }
-   #alert{
+   #alert, #deleteconfirm{
        position: absolute;
        width: 50%;
        top:200px;
@@ -419,6 +442,7 @@ and (orientation: portrait){
   
 }
 @media screen and (max-width: 690px) and (max-height: 387px) and (orientation: landscape) {
+    
     #my_boards_div, #board_type_div, #new_board_div, #canvas_div, #infodiv{
         position:absolute;
         top: 50px;
@@ -482,7 +506,7 @@ and (orientation: portrait){
        top: 100px;
        left: 200px;
    }
-    #alert{
+    #alert, #deleteconfirm{
        position: absolute;
        width: 50%;
        top:80px;
@@ -506,7 +530,8 @@ and (orientation: portrait){
        height:20px;
    }
 }
-@media screen and (min-width: 1024px) and (min-height: 768px) and (orientation: landscape) {
+@media screen and (min-width: 700px) and (max-width: 1280px) and (max-height: 800px) and (orientation: landscape) {
+    
     #my_boards_div, #board_type_div, #new_board_div, #canvas_div, #infodiv{
         position:absolute;
         top: 100px;
@@ -554,7 +579,7 @@ and (orientation: portrait){
        
    }
     
-    #back, #back_btn, #save{
+    #back, #back_btn, #save, #canvas_back, #canvas_save{
         width: 90px;
     }
     
@@ -576,7 +601,7 @@ and (orientation: portrait){
        top: 200px;
        left: 450px;
    }
-    #alert{
+    #alert, #deleteconfirm{
        position: absolute;
        width: 30%;
        top:80px;
@@ -598,190 +623,5 @@ and (orientation: portrait){
        left: 500px;
        width: 30px;
        height:30px;
-   }
-}
-@media screen 
-  and (min-height: 690px)
-and (max-height: 800px)
-  and (min-width: 390px) 
-and (max-width: 760px)
-  and (orientation: portrait){
-
-    #my_boards_div, #board_type_div, #canvas_div, #infodiv{
-        position:absolute;
-        top: 80px;
-        width:95%;
-        margin: 0px;
-        padding: 0px;
-    }
-    
-    #new_board_div{
-        position: absolute;
-        top: 60px;
-        width: 95%;
-        margin: 0px;
-        padding: 0px;
-    }
-
-    #save{
-        right: 90px;
-    }
-    .my_boards_td{
-        height:90px;
-        width:30%;
-    }
-    .td_div{
-        height: 80px;
-    }
-
-   #oneby2, #oneby3, #twoby1, #twoby2, #threeby1, #threeby2{
-        height:120px;
-        width: 50%;
-
-    }
-   #canvas_text{
-       position: absolute;
-       top: 200px;
-       left: 100px;
-   }
-   
-   #displayboard_div #back{
-       width: 20px;
-       height: 20px;
-   }
-   #alert{
-       position: absolute;
-       width: 80%;
-       top:200px;
-       left: 20px;
-       height:150px;
-   }
-   #deletealert{
-       position:absolute;
-       top:70px;
-       left:100px;
-   }
-   #processing{
-       position:absolute;
-       top: 10px;
-       left: 150px;
-       width: 20px;
-       height:20px;
-   }
-   .new_board_td_valign_2_1{
-        width: 60%;
-        height:220px;
-        margin:20px 60px 0px 60px;
-    }
-  .new_board_td_valign_3_1{
-        width: 50%;
-        height:160px;
-        margin:20px 60px 0px 60px;
-    }
-  .new_board_td_grid_2_2{
-        width:95%;
-        height:220px;
-    }
-    .new_board_td_grid_3_2{
-        width:95%;
-        height:160px;
-    }
-    
-  .new_board_td_halign{
-       margin: 150px 10px 0px 10px;
-       width:95%;
-       height: 220px;
-   }
-}
-@media screen and (min-width: 690px)
-and (max-width: 800px)
-  and (min-height: 390px) 
-and (max-height: 760px)
-   and (orientation: landscape) {
-    #my_boards_div, #board_type_div, #new_board_div, #canvas_div, #infodiv{
-        position:absolute;
-        top: 50px;
-        width:95%;
-        margin: 0px;
-        padding: 0px;
-    }
-    #oneby2, #oneby3, #twoby1, #twoby2, #threeby1, #threeby2{
-        height:45px;
-        width: 30%;
-
-    }
-    .my_boards_td{
-        height:120px;
-        width:30%;
-    }
-    .td_div{
-        height:110px;
-
-    }
-    .new_board_td_valign_2_1{
-        width: 50%;
-        height:200px;
-        margin:20px 60px 0px 60px;
-    }
-    .new_board_td_valign_3_1{
-        width: 40%;
-        height:100px;
-        margin:20px 60px 0px 60px;
-    }
-    .new_board_td_grid_2_2{
-        width:95%;
-        height:200px;
-    }
-    .new_board_td_grid_3_2{
-        width:80%;
-        height:100px;
-        margin:20px 30px 0px 30px;
-    }
-    .new_board_td_halign{
-       margin: 40px 10px 0px 10px;
-       width: 95%;
-       height:200px;
-   }
-    
-     #save{
-        right: 120px;
-    }
-    #new_board_div{
-        position:absolute;
-        top: 60px;
-        width:95%;
-    }
-    #canvas_div{
-        position:absolute;
-        top: 80px;
-        width:95%;
-    }
-    #canvas_text{
-       position: absolute;
-       top: 100px;
-       left: 200px;
-   }
-    #alert{
-       position: absolute;
-       width: 50%;
-       top:80px;
-       left: 150px;
-       height:150px;
-   }
-    #deletealert{
-       position:absolute;
-       top:80px;
-       left:150px;
-   }
-    #displayboard_div #back{
-       width: 20px;
-       height: 20px;
-   }
-   #processing{
-       position:absolute;
-       top: 10px;
-       left: 300px;
-       width: 20px;
-       height:20px;
    }
 }
