@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="com.autismwayoflife" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="com.autismwayoflife" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
   <name>MyChoiceMaker</name>
   <description>This app presents a simple interface for creating and viewing choice boards for children with autism or other communication challenges. Choice boards can be customized according to the level of functioning and visual strength of the child. Choice items ca  be added as picture, typed text or hand written text.The display is kept simple to suit to the needs of children who are still developing the skill of choice making. </description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Pooja Srivastava</author>
@@ -108,11 +108,9 @@
     <splash src="res/screens/wp8/SplashScreenImage.png" width="768" height="1280" />
   </platform>
   <plugin name="com.telerik.plugins.nativepagetransitions" version="0.6.4" src="https://github.com/Telerik-Verified-Plugins/NativePageTransitions" />
-  <plugin name="cordova-plugin-screen-orientation" version="1.4.0" src="https://github.com/gbenvenuti/cordova-plugin-screen-orientation" />
   <plugin name="cordova-plugin-camera" version="2.1.1" />
   <plugin name="cordova-plugin-file" version="4.1.1" />
   <plugin name="cordova-plugin-file-transfer" version="1.5.1" />
-  <plugin name="cordova-plugin-statusbar" version="2.1.4-dev" src="https://github.com/apache/cordova-plugin-statusbar" />
   <plugin name="cordova-plugin-fullscreen" version="1.1.0" src="https://github.com/mesmotronic/cordova-plugin-fullscreen" />
   <preference name="Fullscreen" value="True" />
   <preference name="DisallowOverscroll" value="true" />
@@ -121,4 +119,6 @@
   <plugin name="cordova-plugin-media" version="2.3.0" />
   <plugin name="cordova-plugin-compat" version="1.0.0" />
   <plugin name="cordova-plugin-media-capture" version="1.3.1-dev" src="https://github.com/apache/cordova-plugin-media-capture" />
+  <plugin name="cordova-plugin-statusbar" version="2.2.0" />
+  <plugin name="cordova-plugin-screen-orientation" version="1.4.2" src="https://github.com/apache/cordova-plugin-screen-orientation" />
 </widget>

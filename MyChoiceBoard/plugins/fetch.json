@@ -16,15 +16,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-screen-orientation": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/gbenvenuti/cordova-plugin-screen-orientation",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-camera": {
         "source": {
             "type": "registry",
@@ -45,15 +36,6 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-file-transfer@~1.5.0"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-statusbar": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-statusbar",
-            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
@@ -87,6 +69,23 @@
         "source": {
             "type": "git",
             "url": "https://github.com/apache/cordova-plugin-media-capture",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar@2.2.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-screen-orientation": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-screen-orientation",
             "subdir": "."
         },
         "is_top_level": true,

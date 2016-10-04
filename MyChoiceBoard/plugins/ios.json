@@ -22,12 +22,6 @@
         "cordova-plugin-fullscreen": {
             "PACKAGE_NAME": "com.autismwayoflife"
         },
-        "cordova-plugin-screen-orientation": {
-            "PACKAGE_NAME": "com.autismwayoflife"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.autismwayoflife"
-        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.autismwayoflife"
         },
@@ -35,6 +29,12 @@
             "PACKAGE_NAME": "com.autismwayoflife"
         },
         "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.autismwayoflife"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.autismwayoflife"
+        },
+        "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "com.autismwayoflife"
         }
     },
